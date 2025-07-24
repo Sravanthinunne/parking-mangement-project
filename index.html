@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Parking Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .form {
+      max-width: 400px;
+      margin: 0 auto 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+    .remove-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Parking Management System</h1>
+
+  <div class="form">
+    <input type="text" id="vehicleNumber" placeholder="Enter Vehicle Number">
+    <input type="text" id="ownerName" placeholder="Enter Owner Name">
+    <button onclick="addVehicle()">Add Vehicle</button>
+  </div>
+
+  <table id="parkingTable">
+    <thead>
+      <tr>
+        <th>Vehicle Number</th>
+        <th>Owner Name</th>
+        <th>Entry Time</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Vehicle rows will appear here -->
+    </tbody>
+  </table>
+
+  <script>
+    function addVehicle() {
+      const number = document.getElementById('vehicleNumber').value.trim();
+      const owner = document.getElementById('ownerName').value.trim();
+
+      if (!number || !owner) {
+        alert("Please enter both fields.");
+        return;
+      }
+
+      const time = new Date().toLocaleTimeString();
+      const table = document.getElementById('parkingTable').getElementsByTagName('tbody')[0];
+      const row = table.insertRow();
+
+      row.insertCell(0).textContent = number;
+      row.insertCell(1).textContent = owner;
+      row.insertCell(2).textContent = time;
+
+      const removeCell = row.insertCell(3);
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = "Remove";
+      removeBtn.className = "remove-btn";
+      removeBtn.onclick = function () {
+        table.deleteRow(row.rowIndex - 1);
+      };
+      removeCell.appendChild(removeBtn);
+
+      document.getElementById('vehicleNumber').value = "";
+      document.getElementById('ownerName').value = "";
+    }
+  </script>
+
+</body>
+</html>
